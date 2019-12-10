@@ -14,22 +14,15 @@ float Vector2D::get_random_float() {
 
 Vector2D::Vector2D(float x, float y) : x{x}, y{y} {}
 
-Vector2D::Vector2D(const Vector2D &other) : x{other.x}, y{other.y} {}
-
-Vector2D::Vector2D(Vector2D &&other) noexcept : x{other.x}, y{other.y} {
-    other.x = 0;
-    other.y = 0;
-}
+Vector2D::Vector2D(const Vector2D &other) = default;
 
 Vector2D::~Vector2D() = default;
 
 Vector2D &Vector2D::operator=(const Vector2D &other) = default;
 
-Vector2D &Vector2D::operator=(Vector2D &&other) noexcept {
-    x = other.x;
-    y = other.y;
-    other.x = 0;
-    other.y = 0;
+Vector2D &Vector2D::operator=(float scalar) {
+    x = scalar;
+    y = scalar;
     return *this;
 }
 
@@ -128,6 +121,14 @@ void Vector2D::normalize() {
     if (magnitude != 0) {
         x /= magnitude;
         y /= magnitude;
+    }
+}
+
+void Vector2D::limit(float max) {
+    float magnitude = norm();
+    if (magnitude > max) {
+        x *= max / magnitude;
+        y *= max / magnitude;
     }
 }
 

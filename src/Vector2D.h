@@ -20,14 +20,12 @@ public:
 
     Vector2D(const Vector2D &other);
 
-    Vector2D(Vector2D &&other) noexcept;
-
     ~Vector2D();
 
     // Operators
     Vector2D &operator=(const Vector2D &other);
 
-    Vector2D &operator=(Vector2D &&other) noexcept;
+    Vector2D &operator=(float scalar);
 
     Vector2D operator+(const Vector2D &other) const;
 
@@ -67,6 +65,8 @@ public:
     float norm() const;
 
     void normalize();
+
+    void limit(float max);
 
     static Vector2D random();
 

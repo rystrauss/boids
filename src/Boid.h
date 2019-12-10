@@ -14,6 +14,12 @@ private:
     constexpr static float MAX_SPEED_PREDATOR = 7.5;
     constexpr static float MAX_FORCE = 0.5;
 
+    constexpr static float ALIGNMENT_WEIGHT = 1.0;
+    constexpr static float COHESION_WEIGHT = 1.0;
+    constexpr static float SEPARATION_WEIGHT = 1.5;
+
+    constexpr static float ACCELERATION_SCALE = 0.4;
+
 public:
     Vector2D position, velocity, acceleration;
     float max_speed, max_force;
@@ -24,23 +30,23 @@ public:
 
     Boid(const Boid &other);
 
-    Boid(Boid &&other) noexcept;
-
     ~Boid();
 
     // Operators
     Boid &operator=(const Boid &other);
 
-    Boid &operator=(Boid &&other) noexcept;
-
     // Methods
-    Vector2D alignment(std::vector<Boid> &boids) const;
+    Vector2D alignment(const std::vector<Boid *> &boids) const;
 
-    Vector2D cohesion(std::vector<Boid> &boids) const;
+    Vector2D cohesion(const std::vector<Boid *> &boids) const;
 
-    Vector2D separation(std::vector<Boid> &boids) const;
+    Vector2D separation(const std::vector<Boid *> &boids) const;
 
     void apply_force(const Vector2D &force);
+
+    void update(const std::vector<Boid *> &boids, float window_width, float window_height);
+
+    float angle() const;
 
 };
 
