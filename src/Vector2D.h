@@ -5,8 +5,13 @@
 #ifndef BOIDS_VECTOR2D_H
 #define BOIDS_VECTOR2D_H
 
+#include <random>
 
 class Vector2D {
+private:
+
+    float static get_random_float();
+
 public:
     float x, y;
 
@@ -62,6 +67,8 @@ public:
     float norm() const;
 
     void normalize();
+
+    static Vector2D random();
 
 };
 

@@ -5,6 +5,13 @@
 #include "Vector2D.h"
 #include <cmath>
 
+float Vector2D::get_random_float() {
+    static std::random_device rd;
+    static std::ranlux24_base engine(rd());
+    static std::uniform_real_distribution<float> dist(0, 1);
+    return dist(engine);
+}
+
 Vector2D::Vector2D(float x, float y) : x{x}, y{y} {}
 
 Vector2D::Vector2D(const Vector2D &other) : x{other.x}, y{other.y} {}
@@ -122,4 +129,8 @@ void Vector2D::normalize() {
         x /= magnitude;
         y /= magnitude;
     }
+}
+
+Vector2D Vector2D::random() {
+    return Vector2D{get_random_float(), get_random_float()};
 }
