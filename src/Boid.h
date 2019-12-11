@@ -9,24 +9,17 @@
 #include <vector>
 
 class Boid {
-private:
-    constexpr static float MAX_SPEED = 3.5;
-    constexpr static float MAX_SPEED_PREDATOR = 7.5;
-    constexpr static float MAX_FORCE = 0.5;
-
-    constexpr static float ALIGNMENT_WEIGHT = 1.0;
-    constexpr static float COHESION_WEIGHT = 1.0;
-    constexpr static float SEPARATION_WEIGHT = 1.5;
-
-    constexpr static float ACCELERATION_SCALE = 0.4;
 
 public:
     Vector2D position, velocity, acceleration;
     float max_speed, max_force;
+    float acceleration_scale;
+    float cohesion_weight, alignment_weight, separation_weight;
     bool is_predator;
 
     // Constructors
-    Boid(float x, float y, bool is_predator = false);
+    Boid(float x, float y, float max_speed, float max_force, float acceleration_scale, float cohesion_weight,
+         float alignment_weight, float separation_weight, bool is_predator = false);
 
     Boid(const Boid &other);
 

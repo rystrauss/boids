@@ -1,4 +1,4 @@
-set(SOURCE_FILES main.cpp Vector2D.cpp Vector2D.h Boid.cpp Boid.h Flock.cpp Flock.h Simulation.cpp Simulation.h)
+set(SOURCE_FILES main.cpp cxxopts.hpp Vector2D.cpp Vector2D.h Boid.cpp Boid.h Flock.cpp Flock.h Simulation.cpp Simulation.h)
 
 add_executable(run_simulation ${SOURCE_FILES})
 find_package(SFML COMPONENTS graphics window system REQUIRED)

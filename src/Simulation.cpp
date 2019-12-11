@@ -5,19 +5,26 @@
 #include "Simulation.h"
 #include <iostream>
 
-Simulation::Simulation() {
+Simulation::Simulation(int window_width, int window_height, float max_speed, float max_force,
+                       float alignment_weight, float cohesion_weight, float separation_weight,
+                       float acceleration_scale) {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-    window_width = DEFAULT_WINDOW_WIDTH;
-    window_height = DEFAULT_WINDOW_HEIGHT;
     window.create(sf::VideoMode(window_width, window_height, desktop.bitsPerPixel), "Boids", sf::Style::None);
 
-    boid_size = DEFAULT_BOID_SIZE;
+    this->window_width = window_width;
+    this->window_height = window_height;
+    this->max_speed = max_speed;
+    this->max_force = max_force;
+    this->alignment_weight = alignment_weight;
+    this->cohesion_weight = cohesion_weight;
+    this->separation_weight = separation_weight;
+    this->acceleration_scale = acceleration_scale;
 }
 
 Simulation::~Simulation() = default;
 
-void Simulation::run() {
-    for (int i = 0; i < DEFAULT_NUM_BOIDS; ++i) {
+void Simulation::run(int flock_size) {
+    for (int i = 0; i < flock_size; ++i) {
         add_boid(get_random_float() * window_width, get_random_float() * window_height);
     }
 
@@ -28,11 +35,12 @@ void Simulation::run() {
 }
 
 void Simulation::add_boid(float x, float y, bool is_predator) {
-    Boid *b = new Boid{x, y, is_predator};
-    sf::CircleShape shape(boid_size, 3);
+    Boid *b = new Boid{x, y, max_speed, max_force, acceleration_scale, cohesion_weight, alignment_weight,
+                       separation_weight, is_predator};
+    sf::CircleShape shape(DEFAULT_BOID_SIZE, 3);
 
     shape.setPosition(x, y);
-    shape.setFillColor(sf::Color::Green);
+    shape.setFillColor(is_predator ? sf::Color::Red : sf::Color::Green);
     shape.setOutlineColor(sf::Color::White);
     shape.setOutlineThickness(1);
 
