@@ -29,7 +29,7 @@ private:
 
     void render();
 
-    void handle_input();
+    bool handle_input();
 
     float static get_random_float();
 

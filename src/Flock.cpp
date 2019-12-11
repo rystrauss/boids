@@ -22,8 +22,9 @@ void Flock::add(Boid *boid) {
     boids.emplace_back(boid);
 }
 
-void Flock::update() {
-
+void Flock::update(float window_width, float window_height) {
+    for (Boid *b : boids)
+        b->update(boids, window_width, window_height);
 }
 
 int Flock::size() {

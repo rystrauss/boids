@@ -24,7 +24,7 @@ public:
 
     void add(Boid *boid);
 
-    void update();
+    void update(float window_width, float window_height);
 
     int size();
 

@@ -22,7 +22,7 @@ void Simulation::run() {
     }
 
     while (window.isOpen()) {
-        handle_input();
+        if (handle_input()) break;
         render();
     }
 }
@@ -42,7 +42,7 @@ void Simulation::add_boid(float x, float y, bool is_predator) {
 
 void Simulation::render() {
     window.clear();
-    flock.update();
+    flock.update(window_width, window_height);
 
     for (int i = 0; i < shapes.size(); ++i) {
         Boid *b = flock[i];
@@ -54,8 +54,15 @@ void Simulation::render() {
     window.display();
 }
 
-void Simulation::handle_input() {
-
+bool Simulation::handle_input() {
+    sf::Event event;
+    while (window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            window.close();
+            return true;
+        }
+    }
+    return false;
 }
 
 float Simulation::get_random_float() {

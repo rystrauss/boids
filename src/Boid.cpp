@@ -63,8 +63,8 @@ void Boid::update(const std::vector<Boid *> &boids, float window_width, float wi
     // If boid leaves the screen, update position so the boid wraps around
     if (position.x < 0) position.x += window_width;
     if (position.y < 0) position.y += window_height;
-    if (position.x > 1000) position.x -= window_width;
-    if (position.y > 1000) position.y -= window_height;
+    if (position.x >= window_width) position.x -= window_width;
+    if (position.y >= window_height) position.y -= window_height;
 
 }
 
