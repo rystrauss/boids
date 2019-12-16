@@ -2,13 +2,13 @@
 // Created by Ryan Strauss on 12/9/19.
 //
 
-#include "Boid.h"
 #include <cmath>
+#include "Boid.h"
 
 Boid::Boid(float x, float y, float max_speed, float max_force, float acceleration_scale, float cohesion_weight,
-           float alignment_weight, float separation_weight, bool is_predator) {
+           float alignment_weight, float separation_weight, float perception, bool is_predator) {
     position = Vector2D{x, y};
-    velocity = Vector2D::random();
+    velocity = Vector2D::random() * max_speed - 0.5;
     acceleration = Vector2D{};
 
     this->max_speed = max_speed;
@@ -18,6 +18,7 @@ Boid::Boid(float x, float y, float max_speed, float max_force, float acceleratio
     this->cohesion_weight = cohesion_weight;
     this->alignment_weight = alignment_weight;
     this->separation_weight = separation_weight;
+    this->perception = perception;
     this->is_predator = is_predator;
 }
 
@@ -31,6 +32,7 @@ Boid::Boid(const Boid &other) {
     cohesion_weight = other.cohesion_weight;
     alignment_weight = other.alignment_weight;
     separation_weight = other.separation_weight;
+    perception = other.perception;
     is_predator = other.is_predator;
 }
 
@@ -38,15 +40,15 @@ Boid::~Boid() = default;
 
 Boid &Boid::operator=(const Boid &other) = default;
 
-Vector2D Boid::alignment(const std::vector<Boid *> &boids) const {
+Vector2D Boid::alignment(const std::vector<Boid> &boids) const {
     return Vector2D();
 }
 
-Vector2D Boid::cohesion(const std::vector<Boid *> &boids) const {
+Vector2D Boid::cohesion(const std::vector<Boid> &boids) const {
     return Vector2D();
 }
 
-Vector2D Boid::separation(const std::vector<Boid *> &boids) const {
+Vector2D Boid::separation(const std::vector<Boid> &boids) const {
     return Vector2D();
 }
 
@@ -54,7 +56,7 @@ void Boid::apply_force(const Vector2D &force) {
     acceleration += force;
 }
 
-void Boid::update(const std::vector<Boid *> &boids, float window_width, float window_height) {
+void Boid::update(const std::vector<Boid> &boids, float window_width, float window_height) {
     // Apply each rule, get resulting forces, and weight them
     Vector2D alignment_update = alignment(boids) * alignment_weight;
     Vector2D cohesion_update = cohesion(boids) * cohesion_weight;
@@ -75,7 +77,6 @@ void Boid::update(const std::vector<Boid *> &boids, float window_width, float wi
     if (position.y < 0) position.y += window_height;
     if (position.x >= window_width) position.x -= window_width;
     if (position.y >= window_height) position.y -= window_height;
-
 }
 
 float Boid::angle() const {

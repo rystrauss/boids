@@ -2,8 +2,8 @@
 // Created by Ryan Strauss on 12/9/19.
 //
 
-#include "Vector2D.h"
 #include <cmath>
+#include "Vector2D.h"
 
 float Vector2D::get_random_float() {
     static std::random_device rd;

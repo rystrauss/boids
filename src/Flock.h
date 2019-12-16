@@ -5,12 +5,12 @@
 #ifndef BOIDS_FLOCK_H
 #define BOIDS_FLOCK_H
 
-#include "Boid.h"
 #include <vector>
+#include "Boid.h"
 
 class Flock {
 private:
-    std::vector<Boid *> boids;
+    std::vector<Boid> boids;
 
 public:
 
@@ -20,13 +20,13 @@ public:
 
     ~Flock();
 
-    Boid *operator[](int i) const;
+    Boid operator[](int i) const;
 
-    void add(Boid *boid);
+    void add(const Boid &boid);
 
     void update(float window_width, float window_height);
 
-    int size();
+    int size() const;
 
 };
 

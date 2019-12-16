@@ -3,13 +3,14 @@
 //
 
 #include "Simulation.h"
-#include <iostream>
+
 
 Simulation::Simulation(int window_width, int window_height, float max_speed, float max_force,
                        float alignment_weight, float cohesion_weight, float separation_weight,
-                       float acceleration_scale) {
+                       float acceleration_scale, float perception) {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     window.create(sf::VideoMode(window_width, window_height, desktop.bitsPerPixel), "Boids", sf::Style::None);
+    window.setFramerateLimit(FRAME_RATE);
 
     this->window_width = window_width;
     this->window_height = window_height;
@@ -19,6 +20,7 @@ Simulation::Simulation(int window_width, int window_height, float max_speed, flo
     this->cohesion_weight = cohesion_weight;
     this->separation_weight = separation_weight;
     this->acceleration_scale = acceleration_scale;
+    this->perception = perception;
 }
 
 Simulation::~Simulation() = default;
@@ -35,8 +37,8 @@ void Simulation::run(int flock_size) {
 }
 
 void Simulation::add_boid(float x, float y, bool is_predator) {
-    Boid *b = new Boid{x, y, max_speed, max_force, acceleration_scale, cohesion_weight, alignment_weight,
-                       separation_weight, is_predator};
+    Boid b = Boid{x, y, max_speed, max_force, acceleration_scale, cohesion_weight, alignment_weight,
+                  separation_weight, perception, is_predator};
     sf::CircleShape shape(DEFAULT_BOID_SIZE, 3);
 
     shape.setPosition(x, y);
@@ -53,9 +55,9 @@ void Simulation::render() {
     flock.update(window_width, window_height);
 
     for (int i = 0; i < shapes.size(); ++i) {
-        Boid *b = flock[i];
-        shapes[i].setPosition(b->position.x, b->position.y);
-        shapes[i].setRotation(b->angle());
+        Boid b = flock[i];
+        shapes[i].setPosition(b.position.x, b.position.y);
+        shapes[i].setRotation(b.angle());
         window.draw(shapes[i]);
     }
 
