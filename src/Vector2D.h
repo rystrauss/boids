@@ -5,7 +5,6 @@
 #ifndef BOIDS_VECTOR2D_H
 #define BOIDS_VECTOR2D_H
 
-#include <random>
 
 class Vector2D {
 private:
@@ -62,6 +61,8 @@ public:
     bool operator==(const Vector2D &other) const;
 
     bool operator!=(const Vector2D &other) const;
+
+    Vector2D &operator-();
 
     // Methods
     float distance(const Vector2D &other) const;

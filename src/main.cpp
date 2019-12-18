@@ -4,7 +4,8 @@
 #include "cxxopts.hpp"
 
 int main(int argc, char **argv) {
-    cxxopts::Options options("boids", "Runs a simulation of Craig Reynolds' boids.");
+    cxxopts::Options options("boids", "Runs a simulation of Craig Reynolds' boids program.");
+
     options.add_options()
             ("width", "Width of the window.",
              cxxopts::value<int>()->default_value(std::to_string(Simulation::DEFAULT_WINDOW_WIDTH)))
@@ -26,7 +27,10 @@ int main(int argc, char **argv) {
              cxxopts::value<float>()->default_value(std::to_string(Simulation::DEFAULT_ACCELERATION_SCALE)))
             ("perception", "Boids consider other boids within this range when deciding how to act.",
              cxxopts::value<float>()->default_value(std::to_string(Simulation::DEFAULT_PERCEPTION)))
+            ("separation_distance", "The minimum distance boids will try to stay away from each other.",
+             cxxopts::value<float>()->default_value(std::to_string(Simulation::DEFAULT_SEPARATION_DISTANCE)))
             ("help", "Displays this help message.");
+
     auto result = options.parse(argc, argv);
 
     if (result["help"].as<bool>()) {
@@ -37,7 +41,8 @@ int main(int argc, char **argv) {
     Simulation simulation(result["width"].as<int>(), result["height"].as<int>(), result["max_speed"].as<float>(),
                           result["max_force"].as<float>(), result["alignment_weight"].as<float>(),
                           result["cohesion_weight"].as<float>(), result["separation_weight"].as<float>(),
-                          result["acceleration_scale"].as<float>(), result["perception"].as<float>());
+                          result["acceleration_scale"].as<float>(), result["perception"].as<float>(),
+                          result["separation_distance"].as<float>());
     simulation.run(result["flock_size"].as<int>());
 
     return EXIT_SUCCESS;

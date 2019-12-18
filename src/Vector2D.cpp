@@ -4,11 +4,12 @@
 
 #include <cmath>
 #include <stdexcept>
+#include <random>
 #include "Vector2D.h"
 
 float Vector2D::get_random_float() {
     static std::random_device rd;
-    static std::ranlux24_base engine(rd());
+    static std::mt19937 engine(rd());
     static std::uniform_real_distribution<float> dist(0, 1);
     return dist(engine);
 }
@@ -119,6 +120,12 @@ bool Vector2D::operator==(const Vector2D &other) const {
 
 bool Vector2D::operator!=(const Vector2D &other) const {
     return !(x == other.x && y == other.y);
+}
+
+Vector2D &Vector2D::operator-() {
+    x = -x;
+    y = -y;
+    return *this;
 }
 
 float Vector2D::distance(const Vector2D &other) const {

@@ -7,9 +7,9 @@
 
 Boid::Boid(float x, float y, float max_width, float max_height, float max_speed, float max_force,
            float acceleration_scale, float cohesion_weight, float alignment_weight, float separation_weight,
-           float perception, bool is_predator) {
+           float perception, float separation_distance, bool is_predator) {
     position = Vector2D{x, y};
-    velocity = (Vector2D::random() - 0.5) * max_speed / 2;
+    velocity = (Vector2D::random() - 0.5) * max_speed * 2;
     acceleration = Vector2D{};
 
     this->max_width = max_width;
@@ -22,6 +22,7 @@ Boid::Boid(float x, float y, float max_width, float max_height, float max_speed,
     this->alignment_weight = alignment_weight;
     this->separation_weight = separation_weight;
     this->perception = perception;
+    this->separation_distance = separation_distance;
     this->is_predator = is_predator;
 }
 
@@ -38,6 +39,7 @@ Boid::Boid(const Boid &other) {
     alignment_weight = other.alignment_weight;
     separation_weight = other.separation_weight;
     perception = other.perception;
+    separation_distance = other.separation_distance;
     is_predator = other.is_predator;
 }
 
@@ -46,12 +48,12 @@ Boid::~Boid() = default;
 Boid &Boid::operator=(const Boid &other) = default;
 
 Vector2D Boid::alignment(const std::vector<Boid> &boids) const {
-    Vector2D cm;
+    Vector2D perceived_velocity;
     int n = 0;
 
     for (const Boid &b : boids) {
         if (position != b.position && position.toroidal_distance(b.position, max_width, max_height) < perception) {
-            cm += b.position;
+            perceived_velocity += b.velocity;
             ++n;
         }
     }
@@ -59,19 +61,41 @@ Vector2D Boid::alignment(const std::vector<Boid> &boids) const {
     if (n == 0)
         return Vector2D{};
 
-    cm /= n;
-    cm.normalize();
-    cm *= max_speed;
-    Vector2D steer = cm - velocity;
-    return steer.normalize();
+    perceived_velocity /= n;
+    Vector2D steer = perceived_velocity - velocity;
+    return steer.normalize() * max_speed;
 }
 
 Vector2D Boid::cohesion(const std::vector<Boid> &boids) const {
-    return Vector2D();
+    Vector2D perceived_center;
+    int n = 0;
+
+    for (const Boid &b : boids) {
+        if (position != b.position && position.toroidal_distance(b.position, max_width, max_height) < perception) {
+            perceived_center += b.position;
+            ++n;
+        }
+    }
+
+    if (n == 0)
+        return Vector2D{};
+
+    perceived_center /= n;
+    Vector2D steer = perceived_center - position;
+    return steer.normalize() * max_speed;
 }
 
 Vector2D Boid::separation(const std::vector<Boid> &boids) const {
-    return Vector2D();
+    Vector2D c;
+
+    for (const Boid &b : boids) {
+        if (position != b.position &&
+            position.toroidal_distance(b.position, max_width, max_height) < separation_distance) {
+            c -= b.position - position;
+        }
+    }
+
+    return c.normalize() * max_speed;
 }
 
 void Boid::update(const std::vector<Boid> &boids) {
@@ -83,6 +107,7 @@ void Boid::update(const std::vector<Boid> &boids) {
     acceleration += alignment_update + cohesion_update + separation_update;
     // Scale the acceleration then use it to update the velocity
     acceleration *= acceleration_scale;
+    acceleration.limit(max_force);
     velocity += acceleration;
     // Limit the velocity so the boids don't get too fast
     velocity.limit(max_speed);

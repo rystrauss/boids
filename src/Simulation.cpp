@@ -2,12 +2,13 @@
 // Created by Ryan Strauss on 12/10/19.
 //
 
+#include <random>
 #include "Simulation.h"
 
 
 Simulation::Simulation(int window_width, int window_height, float max_speed, float max_force,
                        float alignment_weight, float cohesion_weight, float separation_weight,
-                       float acceleration_scale, float perception) {
+                       float acceleration_scale, float perception, float separation_distance) {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     window.create(sf::VideoMode(window_width, window_height, desktop.bitsPerPixel), "Boids", sf::Style::Titlebar);
     window.setFramerateLimit(FRAME_RATE);
@@ -21,6 +22,7 @@ Simulation::Simulation(int window_width, int window_height, float max_speed, flo
     this->separation_weight = separation_weight;
     this->acceleration_scale = acceleration_scale;
     this->perception = perception;
+    this->separation_distance = separation_distance;
 }
 
 Simulation::~Simulation() = default;
@@ -38,7 +40,7 @@ void Simulation::run(int flock_size) {
 
 void Simulation::add_boid(float x, float y, bool is_predator) {
     Boid b = Boid{x, y, (float) window_width, (float) window_height, max_speed, max_force, acceleration_scale,
-                  cohesion_weight, alignment_weight, separation_weight, perception, is_predator};
+                  cohesion_weight, alignment_weight, separation_weight, perception, separation_distance, is_predator};
     sf::CircleShape shape(DEFAULT_BOID_SIZE, 3);
 
     shape.setPosition(x, y);
@@ -77,7 +79,7 @@ bool Simulation::handle_input() {
 
 float Simulation::get_random_float() {
     static std::random_device rd;
-    static std::ranlux24_base engine(rd());
+    static std::mt19937 engine(rd());
     static std::uniform_real_distribution<float> dist(0, 1);
     return dist(engine);
 }

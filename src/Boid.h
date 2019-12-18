@@ -9,20 +9,19 @@
 #include "Vector2D.h"
 
 class Boid {
-
 public:
     Vector2D position, velocity, acceleration;
     float max_width, max_height;
     float max_speed, max_force;
     float acceleration_scale;
     float cohesion_weight, alignment_weight, separation_weight;
-    float perception;
+    float perception, separation_distance;
     bool is_predator;
 
     // Constructors
     Boid(float x, float y, float max_width, float max_height, float max_speed, float max_force,
          float acceleration_scale, float cohesion_weight, float alignment_weight, float separation_weight,
-         float perception, bool is_predator = false);
+         float perception, float separation_distance, bool is_predator = false);
 
     Boid(const Boid &other);
 
