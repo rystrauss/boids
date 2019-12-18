@@ -15,7 +15,6 @@ Boid::Boid(float x, float y, float max_width, float max_height, float max_speed,
     this->max_width = max_width;
     this->max_height = max_height;
     this->max_speed = max_speed;
-    if (is_predator) this->max_speed *= 2;
     this->max_force = max_force;
     this->acceleration_scale = acceleration_scale;
     this->cohesion_weight = cohesion_weight;
@@ -24,6 +23,11 @@ Boid::Boid(float x, float y, float max_width, float max_height, float max_speed,
     this->perception = perception;
     this->separation_distance = separation_distance;
     this->is_predator = is_predator;
+
+    if (is_predator) {
+        this->max_speed *= PREDATOR_SPEED_BOOST;
+        this->perception *= PREDATOR_PERCEPTION_BOOST;
+    }
 }
 
 Boid::Boid(const Boid &other) {
@@ -53,6 +57,9 @@ Vector2D Boid::alignment(const std::vector<Boid> &boids) const {
 
     for (const Boid &b : boids) {
         if (position != b.position && position.toroidal_distance(b.position, max_width, max_height) < perception) {
+            if (b.is_predator)
+                return Vector2D{};
+
             perceived_velocity += b.velocity;
             ++n;
         }
@@ -72,6 +79,9 @@ Vector2D Boid::cohesion(const std::vector<Boid> &boids) const {
 
     for (const Boid &b : boids) {
         if (position != b.position && position.toroidal_distance(b.position, max_width, max_height) < perception) {
+            if (b.is_predator)
+                return Vector2D{};
+
             perceived_center += b.position;
             ++n;
         }
@@ -89,9 +99,14 @@ Vector2D Boid::separation(const std::vector<Boid> &boids) const {
     Vector2D c;
 
     for (const Boid &b : boids) {
-        if (position != b.position &&
-            position.toroidal_distance(b.position, max_width, max_height) < separation_distance) {
-            c -= b.position - position;
+        if (position != b.position) {
+            if (!is_predator && b.is_predator &&
+                position.toroidal_distance(b.position, max_width, max_height) < perception) {
+                c -= (b.position - position) * PREDATOR_ESCAPE_FACTOR;
+            } else if (is_predator == b.is_predator &&
+                       position.toroidal_distance(b.position, max_width, max_height) < separation_distance) {
+                c -= b.position - position;
+            }
         }
     }
 
