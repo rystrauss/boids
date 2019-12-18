@@ -41,7 +41,7 @@ void Simulation::run(int flock_size) {
 void Simulation::add_boid(float x, float y, bool is_predator) {
     Boid b = Boid{x, y, (float) window_width, (float) window_height, max_speed, max_force, acceleration_scale,
                   cohesion_weight, alignment_weight, separation_weight, perception, separation_distance, is_predator};
-    sf::CircleShape shape(DEFAULT_BOID_SIZE, 3);
+    sf::CircleShape shape(is_predator ? BOID_SIZE * 1.5 : BOID_SIZE, 3);
 
     shape.setPosition(x, y);
     shape.setFillColor(is_predator ? sf::Color::Red : sf::Color::Green);
@@ -68,12 +68,22 @@ void Simulation::render() {
 
 bool Simulation::handle_input() {
     sf::Event event;
+
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             window.close();
             return true;
         }
     }
+
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+        sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
+        add_boid(mouse_position.x, mouse_position.y, true);
+    } else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
+        add_boid(mouse_position.x, mouse_position.y, false);
+    }
+
     return false;
 }
 

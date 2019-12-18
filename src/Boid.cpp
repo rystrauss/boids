@@ -15,7 +15,7 @@ Boid::Boid(float x, float y, float max_width, float max_height, float max_speed,
     this->max_width = max_width;
     this->max_height = max_height;
     this->max_speed = max_speed;
-    if (is_predator) this->max_speed *= 1.5;
+    if (is_predator) this->max_speed *= 2;
     this->max_force = max_force;
     this->acceleration_scale = acceleration_scale;
     this->cohesion_weight = cohesion_weight;

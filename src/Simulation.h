@@ -34,12 +34,12 @@ private:
 public:
     constexpr static int FRAME_RATE = 60;
 
-    constexpr static float DEFAULT_BOID_SIZE = 3;
-    constexpr static int DEFAULT_WINDOW_WIDTH = 1200;
+    constexpr static float BOID_SIZE = 3;
+    constexpr static int DEFAULT_WINDOW_WIDTH = 1800;
     constexpr static int DEFAULT_WINDOW_HEIGHT = 1200;
     constexpr static int DEFAULT_FLOCK_SIZE = 50;
 
-    constexpr static float DEFAULT_MAX_SPEED = 4;
+    constexpr static float DEFAULT_MAX_SPEED = 6;
     constexpr static float DEFAULT_MAX_FORCE = 0.5;
     constexpr static float DEFAULT_ALIGNMENT_WEIGHT = 1;
     constexpr static float DEFAULT_COHESION_WEIGHT = 1;
