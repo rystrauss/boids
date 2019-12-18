@@ -3,6 +3,7 @@
 //
 
 #include <cmath>
+#include <stdexcept>
 #include "Vector2D.h"
 
 float Vector2D::get_random_float() {
@@ -95,15 +96,29 @@ Vector2D Vector2D::operator/(float scalar) const {
 }
 
 Vector2D &Vector2D::operator/=(const Vector2D &other) {
+    if (other.x == 0 || other.y == 0)
+        throw std::invalid_argument("Divide by zero.");
+
     x /= other.x;
     y /= other.y;
     return *this;
 }
 
 Vector2D &Vector2D::operator/=(float scalar) {
+    if (scalar == 0)
+        throw std::invalid_argument("Divide by zero.");
+
     x /= scalar;
     y /= scalar;
     return *this;
+}
+
+bool Vector2D::operator==(const Vector2D &other) const {
+    return x == other.x && y == other.y;
+}
+
+bool Vector2D::operator!=(const Vector2D &other) const {
+    return !(x == other.x && y == other.y);
 }
 
 float Vector2D::distance(const Vector2D &other) const {
@@ -112,24 +127,39 @@ float Vector2D::distance(const Vector2D &other) const {
     return sqrt(dx * dx + dy * dy);
 }
 
+float Vector2D::toroidal_distance(const Vector2D &other, float width, float height) const {
+    float dx = x - other.x;
+    float dy = y - other.y;
+
+    if (dx > width / 2)
+        dx = width - dx;
+
+    if (dy > height / 2)
+        dy = height - dy;
+
+    return sqrt(dx * dx + dy * dy);
+}
+
 float Vector2D::norm() const {
     return sqrt(x * x + y * y);
 }
 
-void Vector2D::normalize() {
+Vector2D &Vector2D::normalize() {
     float magnitude = norm();
     if (magnitude != 0) {
         x /= magnitude;
         y /= magnitude;
     }
+    return *this;
 }
 
-void Vector2D::limit(float max) {
+Vector2D &Vector2D::limit(float max) {
     float magnitude = norm();
     if (magnitude > max) {
         x *= max / magnitude;
         y *= max / magnitude;
     }
+    return *this;
 }
 
 Vector2D Vector2D::random() {

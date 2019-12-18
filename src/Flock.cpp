@@ -23,7 +23,7 @@ void Flock::add(const Boid &boid) {
 void Flock::update(float window_width, float window_height) {
     // Copy boids so that updates happen simultaneously
     std::vector<Boid> old_boids(boids);
-    for (Boid &b : boids) b.update(old_boids, window_width, window_height);
+    for (Boid &b : boids) b.update(old_boids);
 }
 
 int Flock::size() const {

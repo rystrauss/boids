@@ -9,7 +9,7 @@ Simulation::Simulation(int window_width, int window_height, float max_speed, flo
                        float alignment_weight, float cohesion_weight, float separation_weight,
                        float acceleration_scale, float perception) {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-    window.create(sf::VideoMode(window_width, window_height, desktop.bitsPerPixel), "Boids", sf::Style::None);
+    window.create(sf::VideoMode(window_width, window_height, desktop.bitsPerPixel), "Boids", sf::Style::Titlebar);
     window.setFramerateLimit(FRAME_RATE);
 
     this->window_width = window_width;
@@ -37,8 +37,8 @@ void Simulation::run(int flock_size) {
 }
 
 void Simulation::add_boid(float x, float y, bool is_predator) {
-    Boid b = Boid{x, y, max_speed, max_force, acceleration_scale, cohesion_weight, alignment_weight,
-                  separation_weight, perception, is_predator};
+    Boid b = Boid{x, y, (float) window_width, (float) window_height, max_speed, max_force, acceleration_scale,
+                  cohesion_weight, alignment_weight, separation_weight, perception, is_predator};
     sf::CircleShape shape(DEFAULT_BOID_SIZE, 3);
 
     shape.setPosition(x, y);

@@ -59,14 +59,20 @@ public:
 
     Vector2D &operator/=(float scalar);
 
+    bool operator==(const Vector2D &other) const;
+
+    bool operator!=(const Vector2D &other) const;
+
     // Methods
     float distance(const Vector2D &other) const;
 
+    float toroidal_distance(const Vector2D &other, float width, float height) const;
+
     float norm() const;
 
-    void normalize();
+    Vector2D &normalize();
 
-    void limit(float max);
+    Vector2D &limit(float max);
 
     static Vector2D random();
 

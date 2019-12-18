@@ -12,6 +12,7 @@ class Boid {
 
 public:
     Vector2D position, velocity, acceleration;
+    float max_width, max_height;
     float max_speed, max_force;
     float acceleration_scale;
     float cohesion_weight, alignment_weight, separation_weight;
@@ -19,8 +20,9 @@ public:
     bool is_predator;
 
     // Constructors
-    Boid(float x, float y, float max_speed, float max_force, float acceleration_scale, float cohesion_weight,
-         float alignment_weight, float separation_weight, float perception, bool is_predator = false);
+    Boid(float x, float y, float max_width, float max_height, float max_speed, float max_force,
+         float acceleration_scale, float cohesion_weight, float alignment_weight, float separation_weight,
+         float perception, bool is_predator = false);
 
     Boid(const Boid &other);
 
@@ -36,9 +38,7 @@ public:
 
     Vector2D separation(const std::vector<Boid> &boids) const;
 
-    void apply_force(const Vector2D &force);
-
-    void update(const std::vector<Boid> &boids, float window_width, float window_height);
+    void update(const std::vector<Boid> &boids);
 
     float angle() const;
 
