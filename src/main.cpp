@@ -29,6 +29,7 @@ int main(int argc, char **argv) {
              cxxopts::value<float>()->default_value(std::to_string(Simulation::DEFAULT_PERCEPTION)))
             ("separation_distance", "The minimum distance boids will try to stay away from each other.",
              cxxopts::value<float>()->default_value(std::to_string(Simulation::DEFAULT_SEPARATION_DISTANCE)))
+            ("fullscreen", "Runs the simulation in a fullscreen window.")
             ("help", "Displays this help message.");
 
     auto result = options.parse(argc, argv);
@@ -42,7 +43,7 @@ int main(int argc, char **argv) {
                           result["max_force"].as<float>(), result["alignment_weight"].as<float>(),
                           result["cohesion_weight"].as<float>(), result["separation_weight"].as<float>(),
                           result["acceleration_scale"].as<float>(), result["perception"].as<float>(),
-                          result["separation_distance"].as<float>());
+                          result["separation_distance"].as<float>(), result["fullscreen"].as<bool>());
     simulation.run(result["flock_size"].as<int>());
 
     return EXIT_SUCCESS;

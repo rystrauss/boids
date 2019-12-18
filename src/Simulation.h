@@ -50,7 +50,7 @@ public:
 
     Simulation(int window_width, int window_height, float max_speed, float max_force, float alignment_weight,
                float cohesion_weight, float separation_weight, float acceleration_scale, float perception,
-               float separation_distance);
+               float separation_distance, bool fullscreen = false);
 
     ~Simulation();
 

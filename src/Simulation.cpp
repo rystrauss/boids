@@ -8,13 +8,19 @@
 
 Simulation::Simulation(int window_width, int window_height, float max_speed, float max_force,
                        float alignment_weight, float cohesion_weight, float separation_weight,
-                       float acceleration_scale, float perception, float separation_distance) {
+                       float acceleration_scale, float perception, float separation_distance, bool fullscreen) {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-    window.create(sf::VideoMode(window_width, window_height, desktop.bitsPerPixel), "Boids", sf::Style::Titlebar);
+    if (fullscreen) {
+        window.create(sf::VideoMode(desktop.width, desktop.height, desktop.bitsPerPixel), "Boids",
+                      sf::Style::Fullscreen);
+    } else {
+        window.create(sf::VideoMode(window_width, window_height, desktop.bitsPerPixel), "Boids", sf::Style::Titlebar);
+    }
+
     window.setFramerateLimit(FRAME_RATE);
 
-    this->window_width = window_width;
-    this->window_height = window_height;
+    this->window_width = fullscreen ? desktop.width : window_width;
+    this->window_height = fullscreen ? desktop.height : window_height;
     this->max_speed = max_speed;
     this->max_force = max_force;
     this->alignment_weight = alignment_weight;
