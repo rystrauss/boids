@@ -6,8 +6,8 @@
 Boids is a program developed by Craig Reynolds in 1986, which simulates the flocking behaviour of birds. He published
 this model in 1987 in the seminal paper ["Flocks, Herds, and Schools: A Distributed Behavioral Model"][1].
 
-The motion of a flock of birds is an example of emergent behavior -- each bird is its only individual making its
-own decisions, yet the motion of the entire flock is fluid and synchronized. Somehow, organized group behavior is able
+The motion of a flock of birds is an example of emergent behavior -- each bird is only making individual
+decisions, yet the motion of the entire flock is fluid and synchronized. Somehow, organized group behavior is able
 to emerge as the aggregate of the local actions of each individual animal.
 
 Boids simulates this individual decision making with three rules:
