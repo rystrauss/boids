@@ -8,7 +8,8 @@
 
 Simulation::Simulation(int window_width, int window_height, float max_speed, float max_force,
                        float alignment_weight, float cohesion_weight, float separation_weight,
-                       float acceleration_scale, float perception, float separation_distance, bool fullscreen) {
+                       float acceleration_scale, float perception, float separation_distance, bool fullscreen,
+                       bool light_scheme) {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     if (fullscreen) {
         window.create(sf::VideoMode(desktop.width, desktop.height, desktop.bitsPerPixel), "Boids",
@@ -29,6 +30,7 @@ Simulation::Simulation(int window_width, int window_height, float max_speed, flo
     this->acceleration_scale = acceleration_scale;
     this->perception = perception;
     this->separation_distance = separation_distance;
+    this->light_scheme = light_scheme;
 }
 
 Simulation::~Simulation() = default;
@@ -50,8 +52,8 @@ void Simulation::add_boid(float x, float y, bool is_predator) {
     sf::CircleShape shape(is_predator ? BOID_SIZE * 1.5 : BOID_SIZE, 3);
 
     shape.setPosition(x, y);
-    shape.setFillColor(is_predator ? sf::Color::Red : sf::Color::Green);
-    shape.setOutlineColor(sf::Color::White);
+    shape.setFillColor(is_predator ? sf::Color::Red : (light_scheme ? sf::Color::Black : sf::Color::Green));
+    shape.setOutlineColor(light_scheme ? sf::Color::White : sf::Color::Black);
     shape.setOutlineThickness(1);
 
     flock.add(b);
@@ -59,7 +61,7 @@ void Simulation::add_boid(float x, float y, bool is_predator) {
 }
 
 void Simulation::render() {
-    window.clear();
+    window.clear(light_scheme ? sf::Color::White : sf::Color::Black);
     flock.update(window_width, window_height);
 
     for (int i = 0; i < shapes.size(); ++i) {

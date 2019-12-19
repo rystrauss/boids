@@ -18,6 +18,7 @@ private:
     Flock flock;
     std::vector<sf::CircleShape> shapes;
 
+    bool light_scheme;
     float max_speed, max_force;
     float acceleration_scale;
     float perception, separation_distance;
@@ -50,7 +51,7 @@ public:
 
     Simulation(int window_width, int window_height, float max_speed, float max_force, float alignment_weight,
                float cohesion_weight, float separation_weight, float acceleration_scale, float perception,
-               float separation_distance, bool fullscreen = false);
+               float separation_distance, bool fullscreen = false, bool light_scheme = false);
 
     ~Simulation();
 
