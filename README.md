@@ -3,6 +3,8 @@
 
 # Boids
 
+![Simulation Example](assets/simulation_example.png)
+
 Boids is a program developed by Craig Reynolds in 1986, which simulates the flocking behaviour of birds. He published
 this model in 1987 in the seminal paper ["Flocks, Herds, and Schools: A Distributed Behavioral Model"][1].
 
@@ -20,7 +22,7 @@ This repository contains an implementation of the boids model in C++.
 
 ## Usage
 
-First, clone this repository, which already contains an executable of the boids program. This file can then be run with:
+First, clone this repository, which already contains a binary of the boids program. This file can then be run with:
 ```shell script
 ./bin/boids
 ```
