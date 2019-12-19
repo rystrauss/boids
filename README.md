@@ -3,8 +3,6 @@
 
 # Boids
 
-![Simulation Example](assets/simulation_example.png)
-
 Boids is a program developed by Craig Reynolds in 1986, which simulates the flocking behaviour of birds. He published
 this model in 1987 in the seminal paper ["Flocks, Herds, and Schools: A Distributed Behavioral Model"][1].
 
@@ -19,6 +17,8 @@ Boids simulates this individual decision making with three rules:
  3. **Cohesion:** individuals try to move towards the center of mass of nearby flockmates
  
 This repository contains an implementation of the boids model in C++.
+
+![Simulation Example](assets/simulation_example.png)
 
 ## Usage
 
