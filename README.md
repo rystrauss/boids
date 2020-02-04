@@ -22,12 +22,13 @@ This repository contains an implementation of the boids model in C++.
 
 ## Usage
 
-First, clone this repository, which already contains a binary of the boids program. This file can then be run with:
+This project depends on [SFML][2], which must be installed first.
+
+After installing SFML, the executable for the program can be built and installed from by running the script
+`build_and_install.sh`. This program can then be run with:
 ```shell script
 ./bin/boids
 ```
-The program can also be built and installed from scratch by running the script `build_and_install.sh`. Note that this
-project depends on [SFML][2], which must be installed before doing this.
 
 Almost all aspects of the simulation and the boids' behavior can be customized from the command line. Pass the 
 `--help` flag to see available options.
