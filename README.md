@@ -22,7 +22,7 @@ This repository contains an implementation of the boids model in C++.
 
 ## Usage
 
-This project depends on [SFML][2], which must be installed first.
+This project depends on [SFML][2], which must be installed first. On MacOS, this can be done with `brew install sfml`.
 
 After installing SFML, the executable for the program can be built and installed by running the script
 `build_and_install.sh`. This program can then be run with:
