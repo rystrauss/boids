@@ -22,12 +22,13 @@ public:
     float acceleration_scale;
     float cohesion_weight, alignment_weight, separation_weight;
     float perception, separation_distance;
+    float noise_scale;
     bool is_predator;
 
     // Constructors
     Boid(float x, float y, float max_width, float max_height, float max_speed, float max_force,
          float acceleration_scale, float cohesion_weight, float alignment_weight, float separation_weight,
-         float perception, float separation_distance, bool is_predator = false);
+         float perception, float separation_distance, float noise_scale, bool is_predator = false);
 
     Boid(const Boid &other);
 

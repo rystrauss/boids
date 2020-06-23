@@ -7,7 +7,7 @@
 
 Boid::Boid(float x, float y, float max_width, float max_height, float max_speed, float max_force,
            float acceleration_scale, float cohesion_weight, float alignment_weight, float separation_weight,
-           float perception, float separation_distance, bool is_predator) {
+           float perception, float separation_distance, float noise_scale, bool is_predator) {
     position = Vector2D{x, y};
     velocity = (Vector2D::random() - 0.5) * max_speed * 2;
     acceleration = Vector2D{};
@@ -22,6 +22,7 @@ Boid::Boid(float x, float y, float max_width, float max_height, float max_speed,
     this->separation_weight = separation_weight;
     this->perception = perception;
     this->separation_distance = separation_distance;
+    this->noise_scale = noise_scale;
     this->is_predator = is_predator;
 
     if (is_predator) {
@@ -44,6 +45,7 @@ Boid::Boid(const Boid &other) {
     separation_weight = other.separation_weight;
     perception = other.perception;
     separation_distance = other.separation_distance;
+    noise_scale = other.noise_scale;
     is_predator = other.is_predator;
 }
 
@@ -120,10 +122,12 @@ void Boid::update(const std::vector<Boid> &boids) {
     Vector2D separation_update = separation(boids) * separation_weight;
     // Apply the weighted forces to this boid
     acceleration += alignment_update + cohesion_update + separation_update;
+    acceleration += (Vector2D::random() - 0.5) * noise_scale;
     // Scale the acceleration then use it to update the velocity
     acceleration *= acceleration_scale;
     acceleration.limit(max_force);
     velocity += acceleration;
+    velocity += (Vector2D::random() - 0.5) * noise_scale;
     // Limit the velocity so the boids don't get too fast
     velocity.limit(max_speed);
     // Then update the position based on the velocity
