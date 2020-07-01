@@ -26,6 +26,8 @@ public:
 
 class KDTree {
 private:
+    float width, height;
+
     Node::NodePtr root;
 
     Node::NodePtr insert(const Node::NodePtr &node, Boid *boid, bool vertical);
@@ -33,7 +35,7 @@ private:
     void search(Boid *query, double radius, const Node::NodePtr &node, std::vector<Boid *> &results) const;
 
 public:
-    KDTree();
+    KDTree(float width, float height);
 
     void insert(Boid *boid);
 

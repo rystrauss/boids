@@ -19,8 +19,10 @@ bool Node::isLeaf() const {
     return this->left == nullptr && this->right == nullptr;
 }
 
-KDTree::KDTree() {
+KDTree::KDTree(float width, float height) {
     this->root = nullptr;
+    this->width = width;
+    this->height = height;
 }
 
 Node::NodePtr KDTree::insert(const Node::NodePtr &node, Boid *boid, bool vertical) {
@@ -48,14 +50,14 @@ double distance2(const Boid *boid, const Node::NodePtr &node) {
 }
 
 void KDTree::search(Boid *query, double radius, const Node::NodePtr &node, std::vector<Boid *> &results) const {
+    double w = query->position.toroidal_distance2(node->boid->position, this->width, this->height);
+
     if (node->isLeaf()) {
-        if (distance2(query, node) < radius * radius) {
+        if (w < radius * radius) {
             results.push_back(node->boid);
         }
         return;
     }
-
-    double w = distance2(query, node);
 
     if (w < radius * radius)
         results.push_back(node->boid);

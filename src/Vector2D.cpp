@@ -134,7 +134,7 @@ float Vector2D::distance(const Vector2D &other) const {
     return sqrt(dx * dx + dy * dy);
 }
 
-float Vector2D::toroidal_distance(const Vector2D &other, float width, float height) const {
+float Vector2D::toroidal_distance2(const Vector2D &other, float width, float height) const {
     float dx = x - other.x;
     float dy = y - other.y;
 
@@ -144,7 +144,11 @@ float Vector2D::toroidal_distance(const Vector2D &other, float width, float heig
     if (dy > height / 2)
         dy = height - dy;
 
-    return sqrt(dx * dx + dy * dy);
+    return dx * dx + dy * dy;
+}
+
+float Vector2D::toroidal_distance(const Vector2D &other, float width, float height) const {
+    return sqrt(toroidal_distance2(other, width, height));
 }
 
 float Vector2D::norm() const {

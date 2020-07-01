@@ -67,6 +67,8 @@ public:
     // Methods
     float distance(const Vector2D &other) const;
 
+    float toroidal_distance2(const Vector2D &other, float width, float height) const;
+
     float toroidal_distance(const Vector2D &other, float width, float height) const;
 
     float norm() const;

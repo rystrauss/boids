@@ -22,7 +22,7 @@ void Flock::add(const Boid &boid) {
 }
 
 void Flock::update(float window_width, float window_height) {
-    KDTree tree;
+    KDTree tree(window_width, window_height);
     for (Boid &b : boids) tree.insert(&b);
 
     for (Boid &b : boids)

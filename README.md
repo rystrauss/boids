@@ -20,6 +20,12 @@ This repository contains an implementation of the boids model in C++.
 
 ![Simulation Example](assets/simulation_example.png)
 
+## Implementation Details
+
+This implementation uses a [k-d tree](https://en.wikipedia.org/wiki/K-d_tree) to increase efficiency. A k-d tree
+partitions the boids in space so that when each boid is updated, we only consider the nearby boids rather than
+iterating over all boids and incurring an O(n<sup>2</sup>) cost.
+
 ## Usage
 
 This project depends on [SFML][2], which must be installed first. On MacOS, this can be done with `brew install sfml`.
