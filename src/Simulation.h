@@ -47,11 +47,11 @@ public:
     constexpr static float DEFAULT_ALIGNMENT_WEIGHT = 1;
     constexpr static float DEFAULT_COHESION_WEIGHT = 1;
     constexpr static float DEFAULT_SEPARATION_WEIGHT = 1.5;
-    constexpr static float DEFAULT_ACCELERATION_SCALE = 0.4;
-    constexpr static float DEFAULT_PERCEPTION = 100;
+    constexpr static float DEFAULT_ACCELERATION_SCALE = 0.025;
+    constexpr static float DEFAULT_PERCEPTION = 50;
     constexpr static float DEFAULT_SEPARATION_DISTANCE = 20;
 
-    constexpr static float DEFAULT_NOISE_SCALE = 1;
+    constexpr static float DEFAULT_NOISE_SCALE = 0.01;
 
     Simulation(int window_width, int window_height, float boid_size, float max_speed, float max_force, float alignment_weight,
                float cohesion_weight, float separation_weight, float acceleration_scale, float perception,

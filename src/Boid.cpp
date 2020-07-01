@@ -104,7 +104,8 @@ Vector2D Boid::separation(const std::vector<Boid> &boids) const {
         if (position != b.position) {
             if (!is_predator && b.is_predator &&
                 position.toroidal_distance(b.position, max_width, max_height) < perception) {
-                c -= (b.position - position) * PREDATOR_ESCAPE_FACTOR;
+                c -= (b.position - position);
+                return c.normalize() * max_speed * PREDATOR_ESCAPE_FACTOR;
             } else if (is_predator == b.is_predator &&
                        position.toroidal_distance(b.position, max_width, max_height) < separation_distance) {
                 c -= b.position - position;
@@ -127,7 +128,8 @@ void Boid::update(const std::vector<Boid> &boids) {
     acceleration *= acceleration_scale;
     acceleration.limit(max_force);
     velocity += acceleration;
-    velocity += (Vector2D::random() - 0.5) * noise_scale;
+    if (noise_scale != 0)
+        velocity += (Vector2D::random() - 0.5) * noise_scale;
     // Limit the velocity so the boids don't get too fast
     velocity.limit(max_speed);
     // Then update the position based on the velocity

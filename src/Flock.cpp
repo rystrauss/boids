@@ -17,7 +17,7 @@ Boid Flock::operator[](int i) const {
 }
 
 void Flock::add(const Boid &boid) {
-    boids.emplace_back(boid);
+    boids.push_back(boid);
 }
 
 void Flock::update(float window_width, float window_height) {
