@@ -38,13 +38,13 @@ public:
     Boid &operator=(const Boid &other);
 
     // Methods
-    Vector2D alignment(const std::vector<Boid> &boids) const;
+    Vector2D alignment(const std::vector<Boid *> &boids) const;
 
-    Vector2D cohesion(const std::vector<Boid> &boids) const;
+    Vector2D cohesion(const std::vector<Boid *> &boids) const;
 
-    Vector2D separation(const std::vector<Boid> &boids) const;
+    Vector2D separation(const std::vector<Boid *> &boids) const;
 
-    void update(const std::vector<Boid> &boids);
+    void update(const std::vector<Boid *> &boids);
 
     float angle() const;
 

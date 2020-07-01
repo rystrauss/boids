@@ -53,16 +53,16 @@ Boid::~Boid() = default;
 
 Boid &Boid::operator=(const Boid &other) = default;
 
-Vector2D Boid::alignment(const std::vector<Boid> &boids) const {
+Vector2D Boid::alignment(const std::vector<Boid *> &boids) const {
     Vector2D perceived_velocity;
     int n = 0;
 
-    for (const Boid &b : boids) {
-        if (position != b.position && position.toroidal_distance(b.position, max_width, max_height) < perception) {
-            if (b.is_predator)
+    for (const Boid *b : boids) {
+        if (position != b->position && position.toroidal_distance(b->position, max_width, max_height) < perception) {
+            if (b->is_predator)
                 return Vector2D{};
 
-            perceived_velocity += b.velocity;
+            perceived_velocity += b->velocity;
             ++n;
         }
     }
@@ -75,16 +75,16 @@ Vector2D Boid::alignment(const std::vector<Boid> &boids) const {
     return steer.normalize() * max_speed;
 }
 
-Vector2D Boid::cohesion(const std::vector<Boid> &boids) const {
+Vector2D Boid::cohesion(const std::vector<Boid *> &boids) const {
     Vector2D perceived_center;
     int n = 0;
 
-    for (const Boid &b : boids) {
-        if (position != b.position && position.toroidal_distance(b.position, max_width, max_height) < perception) {
-            if (b.is_predator)
+    for (const Boid *b : boids) {
+        if (position != b->position && position.toroidal_distance(b->position, max_width, max_height) < perception) {
+            if (b->is_predator)
                 return Vector2D{};
 
-            perceived_center += b.position;
+            perceived_center += b->position;
             ++n;
         }
     }
@@ -97,18 +97,18 @@ Vector2D Boid::cohesion(const std::vector<Boid> &boids) const {
     return steer.normalize() * max_speed;
 }
 
-Vector2D Boid::separation(const std::vector<Boid> &boids) const {
+Vector2D Boid::separation(const std::vector<Boid *> &boids) const {
     Vector2D c;
 
-    for (const Boid &b : boids) {
-        if (position != b.position) {
-            if (!is_predator && b.is_predator &&
-                position.toroidal_distance(b.position, max_width, max_height) < perception) {
-                c -= (b.position - position);
+    for (const Boid *b : boids) {
+        if (position != b->position) {
+            if (!is_predator && b->is_predator &&
+                position.toroidal_distance(b->position, max_width, max_height) < perception) {
+                c -= (b->position - position);
                 return c.normalize() * max_speed * PREDATOR_ESCAPE_FACTOR;
-            } else if (is_predator == b.is_predator &&
-                       position.toroidal_distance(b.position, max_width, max_height) < separation_distance) {
-                c -= b.position - position;
+            } else if (is_predator == b->is_predator &&
+                       position.toroidal_distance(b->position, max_width, max_height) < separation_distance) {
+                c -= b->position - position;
             }
         }
     }
@@ -116,7 +116,7 @@ Vector2D Boid::separation(const std::vector<Boid> &boids) const {
     return c.normalize() * max_speed;
 }
 
-void Boid::update(const std::vector<Boid> &boids) {
+void Boid::update(const std::vector<Boid *> &boids) {
     // Apply each rule, get resulting forces, and weight them
     Vector2D alignment_update = alignment(boids) * alignment_weight;
     Vector2D cohesion_update = cohesion(boids) * cohesion_weight;

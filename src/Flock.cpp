@@ -3,6 +3,7 @@
 //
 
 #include "Flock.h"
+#include "KDTree.h"
 
 Flock::Flock() = default;
 
@@ -21,7 +22,11 @@ void Flock::add(const Boid &boid) {
 }
 
 void Flock::update(float window_width, float window_height) {
-    for (Boid &b : boids) b.update(boids);
+    KDTree tree;
+    for (Boid &b : boids) tree.insert(&b);
+
+    for (Boid &b : boids)
+        b.update(tree.search(&b, b.perception));
 }
 
 int Flock::size() const {
