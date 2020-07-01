@@ -28,8 +28,8 @@ Node::NodePtr KDTree::insert(const Node::NodePtr &node, Boid *boid, bool vertica
         return std::make_shared<Node>(boid, vertical, nullptr, nullptr);
     }
 
-    if (node->vertical && boid->position.x < node->boid->position.x ||
-        !node->vertical && boid->position.y < node->boid->position.y) {
+    if ((node->vertical && boid->position.x < node->boid->position.x) ||
+        (!node->vertical && boid->position.y < node->boid->position.y)) {
         node->left = insert(node->left, boid, !node->vertical);
     } else {
         node->right = insert(node->right, boid, !node->vertical);
