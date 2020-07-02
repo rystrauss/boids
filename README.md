@@ -15,10 +15,13 @@ Boids simulates this individual decision making with three rules:
  1. **Separation:** individuals try to avoid crowding their nearby flockmates
  2. **Alignment:** individuals steer towards the average heading of nearby flockmates
  3. **Cohesion:** individuals try to move towards the center of mass of nearby flockmates
- 
+
 This repository contains an implementation of the boids model in C++.
 
-![Simulation Example](assets/simulation_example.png)
+Below is an example of the simulation running with default parameters. However, the behavior of then
+flock is highly customizable by tweaking various parameters in the command-line interface.
+
+![Simulation Example](assets/simulation-example.gif)
 
 ## Implementation Details
 
@@ -36,7 +39,7 @@ After installing SFML, the executable for the program can be built and installed
 ./bin/boids
 ```
 
-Almost all aspects of the simulation and the boids' behavior can be customized from the command line. Pass the 
+Almost all aspects of the simulation and the boids' behavior can be customized from the command line. Pass the
 `--help` flag to see available options.
 
 The simulation is also interactive. Left-clicking on the screen will add a new boid, and right-clicking will add a new
