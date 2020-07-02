@@ -72,7 +72,7 @@ Vector2D Boid::alignment(const std::vector<Boid *> &boids) const {
 
     perceived_velocity /= n;
     Vector2D steer = perceived_velocity - velocity;
-    return steer.normalize() * max_speed;
+    return steer.normalize();
 }
 
 Vector2D Boid::cohesion(const std::vector<Boid *> &boids) const {
@@ -94,7 +94,7 @@ Vector2D Boid::cohesion(const std::vector<Boid *> &boids) const {
 
     perceived_center /= n;
     Vector2D steer = perceived_center - position;
-    return steer.normalize() * max_speed;
+    return steer.normalize();
 }
 
 Vector2D Boid::separation(const std::vector<Boid *> &boids) const {
@@ -112,7 +112,7 @@ Vector2D Boid::separation(const std::vector<Boid *> &boids) const {
         }
     }
 
-    return c.normalize() * max_speed;
+    return c.normalize();
 }
 
 void Boid::update(const std::vector<Boid *> &boids) {
@@ -122,12 +122,12 @@ void Boid::update(const std::vector<Boid *> &boids) {
     Vector2D separation_update = separation(boids) * separation_weight;
     // Apply the weighted forces to this boid
     acceleration += alignment_update + cohesion_update + separation_update;
-    acceleration += (Vector2D::random() - 0.5) * noise_scale;
     // Scale the acceleration then use it to update the velocity
     acceleration *= acceleration_scale;
     acceleration.limit(max_force);
     velocity += acceleration;
-    velocity += (Vector2D::random() - 0.5) * noise_scale;
+    if (noise_scale != 0)
+        velocity += (Vector2D::random() - 0.5) * noise_scale;
     // Limit the velocity so the boids don't get too fast
     velocity.limit(max_speed);
     // Then update the position based on the velocity

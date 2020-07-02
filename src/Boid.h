@@ -12,8 +12,8 @@ class Boid {
 private:
     constexpr static float PREDATOR_ESCAPE_FACTOR = 10000000;
 
-    constexpr static float PREDATOR_SPEED_BOOST = 1.5;
-    constexpr static float PREDATOR_PERCEPTION_BOOST = 1.8;
+    constexpr static float PREDATOR_SPEED_BOOST = 1.7;
+    constexpr static float PREDATOR_PERCEPTION_BOOST = 2.0;
 
 public:
     Vector2D position, velocity, acceleration;
