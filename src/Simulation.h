@@ -38,17 +38,17 @@ public:
     constexpr static int FRAME_RATE = 60;
 
     constexpr static float DEFAULT_BOID_SIZE = 4;
-    constexpr static int DEFAULT_WINDOW_WIDTH = 1800;
-    constexpr static int DEFAULT_WINDOW_HEIGHT = 1200;
-    constexpr static int DEFAULT_FLOCK_SIZE = 100;
+    constexpr static int DEFAULT_WINDOW_WIDTH = 1500;
+    constexpr static int DEFAULT_WINDOW_HEIGHT = 900;
+    constexpr static int DEFAULT_FLOCK_SIZE = 150;
 
     constexpr static float DEFAULT_MAX_SPEED = 6;
-    constexpr static float DEFAULT_MAX_FORCE = 0.5;
-    constexpr static float DEFAULT_ALIGNMENT_WEIGHT = 1;
-    constexpr static float DEFAULT_COHESION_WEIGHT = 1;
-    constexpr static float DEFAULT_SEPARATION_WEIGHT = 1.5;
-    constexpr static float DEFAULT_ACCELERATION_SCALE = 0.4;
-    constexpr static float DEFAULT_PERCEPTION = 70;
+    constexpr static float DEFAULT_MAX_FORCE = 1;
+    constexpr static float DEFAULT_ALIGNMENT_WEIGHT = 0.65;
+    constexpr static float DEFAULT_COHESION_WEIGHT = 0.75;
+    constexpr static float DEFAULT_SEPARATION_WEIGHT = 4.5;
+    constexpr static float DEFAULT_ACCELERATION_SCALE = 0.3;
+    constexpr static float DEFAULT_PERCEPTION = 100;
     constexpr static float DEFAULT_SEPARATION_DISTANCE = 20;
 
     constexpr static float DEFAULT_NOISE_SCALE = 0;

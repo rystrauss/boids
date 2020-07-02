@@ -123,6 +123,8 @@ void Boid::update(const std::vector<Boid *> &boids) {
     // Apply the weighted forces to this boid
     acceleration += alignment_update + cohesion_update + separation_update;
     // Scale the acceleration then use it to update the velocity
+    if (is_predator)
+        acceleration *= PREDATOR_ACCELERATION_BOOST;
     acceleration *= acceleration_scale;
     acceleration.limit(max_force);
     velocity += acceleration;
