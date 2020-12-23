@@ -21,6 +21,10 @@ void Flock::add(const Boid &boid) {
     boids.emplace_back(boid);
 }
 
+void Flock::clear(){
+    boids.clear();
+}
+
 void Flock::update(float window_width, float window_height) {
     KDTree tree(window_width, window_height);
     for (Boid &b : boids) tree.insert(&b);

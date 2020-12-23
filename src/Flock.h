@@ -24,6 +24,8 @@ public:
 
     void add(const Boid &boid);
 
+    void clear();
+
     void update(float window_width, float window_height);
 
     int size() const;
