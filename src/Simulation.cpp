@@ -93,10 +93,9 @@ bool Simulation::handle_input() {
     } else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
         add_boid(mouse_position.x, mouse_position.y, false);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)){
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){
         flock.clear();
         shapes.clear();
-        run(DEFAULT_FLOCK_SIZE);
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
         window.close();
         std::exit(0);

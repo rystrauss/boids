@@ -40,4 +40,5 @@ Almost all aspects of the simulation and the boids' behavior can be customized f
 `--help` flag to see available options.
 
 The simulation is also interactive. Left-clicking on the screen will add a new boid, and right-clicking will add a new
-predator boid (normal boids will try to avoid these).
+predator boid (normal boids will try to avoid these). Pressing `C` on the keyboard will clear all the Boids on the
+screen, and pressing `Q` will end the simulation and quit the program.
