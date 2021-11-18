@@ -1684,7 +1684,7 @@ namespace cxxopts {
             ++current;
         }
 
-        for (auto &opt : *m_options) {
+        for (auto &opt: *m_options) {
             auto &detail = opt.second;
             auto &value = detail->value();
 
@@ -1792,7 +1792,7 @@ namespace cxxopts {
             result += toLocalString(" " + g + " options:\n");
         }
 
-        for (const auto &o : group->second.options) {
+        for (const auto &o: group->second.options) {
             if (m_positional_set.find(o.l) != m_positional_set.end() &&
                 !m_show_positional) {
                 continue;
@@ -1809,7 +1809,7 @@ namespace cxxopts {
         auto allowed = size_t{76} - longest - OPTION_DESC_GAP;
 
         auto fiter = format.begin();
-        for (const auto &o : group->second.options) {
+        for (const auto &o: group->second.options) {
             if (m_positional_set.find(o.l) != m_positional_set.end() &&
                 !m_show_positional) {
                 continue;
@@ -1860,7 +1860,7 @@ namespace cxxopts {
         std::vector<std::string> all_groups;
         all_groups.reserve(m_help.size());
 
-        for (auto &group : m_help) {
+        for (auto &group: m_help) {
             all_groups.push_back(group.first);
         }
 

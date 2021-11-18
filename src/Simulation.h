@@ -25,6 +25,7 @@ private:
     float cohesion_weight, alignment_weight, separation_weight;
     float noise_scale;
     float boid_size;
+    int num_threads;
 
     void add_boid(float x, float y, bool is_predator = false);
 
@@ -53,9 +54,11 @@ public:
 
     constexpr static float DEFAULT_NOISE_SCALE = 0;
 
-    Simulation(int window_width, int window_height, float boid_size, float max_speed, float max_force, float alignment_weight,
+    Simulation(int window_width, int window_height, float boid_size, float max_speed, float max_force,
+               float alignment_weight,
                float cohesion_weight, float separation_weight, float acceleration_scale, float perception,
-               float separation_distance, float noise_scale, bool fullscreen = false, bool light_scheme = false);
+               float separation_distance, float noise_scale, bool fullscreen = false, bool light_scheme = false,
+               int num_threads = -1);
 
     ~Simulation();
 

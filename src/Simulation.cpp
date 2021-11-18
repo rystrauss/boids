@@ -3,13 +3,14 @@
 //
 
 #include <random>
+#include <omp.h>
 #include "Simulation.h"
 
 
 Simulation::Simulation(int window_width, int window_height, float boid_size, float max_speed, float max_force,
                        float alignment_weight, float cohesion_weight, float separation_weight,
                        float acceleration_scale, float perception, float separation_distance, float noise_scale,
-                       bool fullscreen, bool light_scheme) {
+                       bool fullscreen, bool light_scheme, int num_threads) {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     if (fullscreen) {
         window.create(sf::VideoMode(desktop.width, desktop.height, desktop.bitsPerPixel), "Boids",
@@ -33,6 +34,7 @@ Simulation::Simulation(int window_width, int window_height, float boid_size, flo
     this->separation_distance = separation_distance;
     this->noise_scale = noise_scale;
     this->light_scheme = light_scheme;
+    this->num_threads = num_threads < 0 ? omp_get_max_threads() : num_threads;
 }
 
 Simulation::~Simulation() = default;
@@ -65,7 +67,7 @@ void Simulation::add_boid(float x, float y, bool is_predator) {
 
 void Simulation::render() {
     window.clear(light_scheme ? sf::Color::White : sf::Color::Black);
-    flock.update(window_width, window_height);
+    flock.update(window_width, window_height, this->num_threads);
 
     for (int i = 0; i < shapes.size(); ++i) {
         Boid b = flock[i];
@@ -93,7 +95,7 @@ bool Simulation::handle_input() {
     } else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
         add_boid(mouse_position.x, mouse_position.y, false);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
         flock.clear();
         shapes.clear();
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {

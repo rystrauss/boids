@@ -2,4 +2,5 @@
 build
 build-debug
 bin
+lib
 .DS_Store

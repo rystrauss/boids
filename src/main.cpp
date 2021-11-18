@@ -33,6 +33,8 @@ int main(int argc, char **argv) {
              cxxopts::value<float>()->default_value(std::to_string(Simulation::DEFAULT_SEPARATION_DISTANCE)))
             ("noise_scale", "The scaling factor that controls the amount of noise to be added to boid's movements.",
              cxxopts::value<float>()->default_value(std::to_string(Simulation::DEFAULT_NOISE_SCALE)))
+            ("num_threads", "Number of threads to use for parallelization.",
+             cxxopts::value<int>()->default_value(std::to_string(-1)))
             ("fullscreen", "Runs the simulation in a fullscreen window.")
             ("light_scheme", "Uses a light color scheme.")
             ("help", "Displays this help message.");
@@ -50,7 +52,7 @@ int main(int argc, char **argv) {
                           result["separation_weight"].as<float>(), result["acceleration_scale"].as<float>(),
                           result["perception"].as<float>(), result["separation_distance"].as<float>(),
                           result["noise_scale"].as<float>(), result["fullscreen"].as<bool>(),
-                          result["light_scheme"].as<bool>());
+                          result["light_scheme"].as<bool>(), result["num_threads"].as<int>());
     simulation.run(result["flock_size"].as<int>());
 
     return EXIT_SUCCESS;

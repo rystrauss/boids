@@ -62,7 +62,7 @@ public:
 
     bool operator!=(const Vector2D &other) const;
 
-    Vector2D &operator-();
+    Vector2D operator-() const;
 
     // Methods
     float distance(const Vector2D &other) const;

@@ -57,7 +57,7 @@ Vector2D Boid::alignment(const std::vector<Boid *> &boids) const {
     Vector2D perceived_velocity;
     int n = 0;
 
-    for (const Boid *b : boids) {
+    for (const Boid *b: boids) {
         if (this != b) {
             if (b->is_predator)
                 return Vector2D{};
@@ -79,7 +79,7 @@ Vector2D Boid::cohesion(const std::vector<Boid *> &boids) const {
     Vector2D perceived_center;
     int n = 0;
 
-    for (const Boid *b : boids) {
+    for (const Boid *b: boids) {
         if (this != b) {
             if (b->is_predator)
                 return Vector2D{};
@@ -100,7 +100,7 @@ Vector2D Boid::cohesion(const std::vector<Boid *> &boids) const {
 Vector2D Boid::separation(const std::vector<Boid *> &boids) const {
     Vector2D c;
 
-    for (const Boid *b : boids) {
+    for (const Boid *b: boids) {
         if (this != b) {
             if (!is_predator && b->is_predator) {
                 return (b->position - position).normalize() * -PREDATOR_ESCAPE_FACTOR;

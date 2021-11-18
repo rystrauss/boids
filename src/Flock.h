@@ -26,7 +26,7 @@ public:
 
     void clear();
 
-    void update(float window_width, float window_height);
+    void update(float window_width, float window_height, int num_threads = -1);
 
     int size() const;
 
