@@ -5,6 +5,7 @@
 #ifndef BOIDS_SIMULATION_H
 #define BOIDS_SIMULATION_H
 
+#include <chrono>
 #include <vector>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -18,7 +19,7 @@ private:
     Flock flock;
     std::vector<sf::CircleShape> shapes;
 
-    bool light_scheme;
+    bool light_scheme, fullscreen;
     float max_speed, max_force;
     float acceleration_scale;
     float perception, separation_distance;
@@ -27,7 +28,7 @@ private:
     float boid_size;
     int num_threads;
 
-    void add_boid(float x, float y, bool is_predator = false);
+    void add_boid(float x, float y, bool is_predator = false, bool with_shape = true);
 
     void render();
 
@@ -63,6 +64,8 @@ public:
     ~Simulation();
 
     void run(int flock_size);
+
+    std::vector<double> benchmark(int flock_size, int num_steps);
 
 };
 

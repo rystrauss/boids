@@ -33,6 +33,7 @@ PYBIND11_MODULE(pyboids, m) {
                  py::arg("fullscreen") = false,
                  py::arg("light_scheme") = false,
                  py::arg("num_threads") = -1)
-            .def("run", &Simulation::run, py::arg("flock_size"));
+            .def("run", &Simulation::run, py::arg("flock_size"))
+            .def("benchmark", &Simulation::benchmark, py::arg("flock_size"), py::arg("num_steps"));
 
 }

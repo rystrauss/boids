@@ -40,7 +40,9 @@ THE SOFTWARE.
 #include <vector>
 
 #ifdef __cpp_lib_optional
+
 #include <optional>
+
 #define CXXOPTS_HAS_OPTIONAL
 #endif
 
@@ -671,14 +673,15 @@ namespace cxxopts {
         }
 
 #ifdef CXXOPTS_HAS_OPTIONAL
-        template <typename T>
+
+        template<typename T>
         void
-        parse_value(const std::string& text, std::optional<T>& value)
-        {
-          T result;
-          parse_value(text, result);
-          value = std::move(result);
+        parse_value(const std::string &text, std::optional<T> &value) {
+            T result;
+            parse_value(text, result);
+            value = std::move(result);
         }
+
 #endif
 
         inline
