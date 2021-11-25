@@ -26,7 +26,7 @@ This implementation uses a [k-d tree](https://en.wikipedia.org/wiki/K-d_tree) to
 partitions the boids in space so that when each boid is updated, we only consider the nearby boids rather than
 iterating over all boids and incurring an O(n<sup>2</sup>) cost.
 
-The implementation also used OpenMP for some simple parallelization that leads to further speedups (and therefore the
+The implementation also uses OpenMP for some simple parallelization that leads to further speedups (and therefore the
 ability to simulate a larger number of boids).
 
 ## Usage
