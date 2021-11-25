@@ -26,6 +26,9 @@ This implementation uses a [k-d tree](https://en.wikipedia.org/wiki/K-d_tree) to
 partitions the boids in space so that when each boid is updated, we only consider the nearby boids rather than
 iterating over all boids and incurring an O(n<sup>2</sup>) cost.
 
+The implementation also used OpenMP for some simple parallelization that leads to further speedups (and therefore the
+ability to simulate a larger number of boids).
+
 ## Usage
 
 This project depends on [SFML][2], which must be installed first. On MacOS, this can be done with `brew install sfml`.
@@ -33,7 +36,7 @@ This project depends on [SFML][2], which must be installed first. On MacOS, this
 After installing SFML, the executable for the program can be built and installed by running the script
 `build_and_install.sh`. This program can then be run with:
 ```shell script
-./bin/boids
+./bin/simulate
 ```
 
 Almost all aspects of the simulation and the boids' behavior can be customized from the command line. Pass the
