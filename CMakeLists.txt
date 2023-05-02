@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.25)
 project(boids)
 
 if (NOT CMAKE_BUILD_TYPE)
@@ -25,25 +25,24 @@ set(LIB_SOURCES
         src/Simulation.cpp
         src/KDTree.cpp)
 
-find_package(SFML COMPONENTS graphics window system REQUIRED)
-find_package(pybind11 REQUIRED)
-find_package(OpenMP 4.5)
+find_package(SFML CONFIG COMPONENTS graphics window system REQUIRED)
+find_package(OpenMP 4.5 REQUIRED)
+find_package(pybind11)
 
 add_library(boids ${LIB_SOURCES} ${LIB_HEADERS})
 
-if (OpenMP_CXX_FOUND)
-    target_link_libraries(boids OpenMP::OpenMP_CXX sfml-graphics sfml-window sfml-system)
-else()
-    target_link_libraries(boids sfml-graphics sfml-window sfml-system)
-endif ()
+target_link_libraries(boids OpenMP::OpenMP_CXX sfml-graphics sfml-window sfml-system)
 
 add_executable(simulate src/main.cpp src/cxxopts.hpp)
 target_link_libraries(simulate boids)
 
-pybind11_add_module(pyboids src/pyboids.cpp)
-target_link_libraries(pyboids PUBLIC boids)
-
 install(TARGETS simulate DESTINATION ${INSTALL_BIN_DIR})
-install(TARGETS pyboids
-        COMPONENT python
-        LIBRARY DESTINATION ${INSTALL_LIB_DIR})
+
+if (pybind11_FOUND)
+    pybind11_add_module(pyboids src/pyboids.cpp)
+    target_link_libraries(pyboids PUBLIC boids)
+
+    install(TARGETS pyboids
+            COMPONENT python
+            LIBRARY DESTINATION ${INSTALL_LIB_DIR})
+endif ()

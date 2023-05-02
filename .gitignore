@@ -1,4 +1,5 @@
 .idea
+cmake-build-*
 build
 build-debug
 bin
